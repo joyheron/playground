@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hyphens Auto</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+      content="A test for hyphens auto">
+    <style>
+        .box {
+            box-sizing: border-box;
+            width: 8.5rem;
+            border: 1px solid black;
+            padding: 1rem;
+            
+            word-wrap: break-word;
+            -ms-hyphens: auto;
+            -webkit-hyphens: auto;
+            hyphens: auto;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+        <p>Test hyphens with <code>lang=en</code> dictionary:</p>
+        <p>Unternehmenskommunikation</p>
+    </div>
+    <div lang="de" class="box">
+        <p>Test hyphens with <code>lang=de</code> dictionary:</p>
+        <p>Unternehmenskommunikation</p>
+    </div>
+  </body>
+</html>
