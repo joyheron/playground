@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>focus-within Bug for suggestions field</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+      content="Trying to create a minimal example of this weird behavior that I've come accross">
+    <style>
+      form {
+        display: relative;
+      }
+      form:not(:focus-within) .suggestions {
+        display: none;
+      }
+      .suggestions {
+        position: absolute;
+        border: 1px solid black;
+        background-color: white;
+      }
+      .suggestions li {
+        padding: 0.5rem 1rem;
+      }
+
+      /* Other styles for aesthetics */
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      label::after {
+        content: '\A';
+        white-space: pre;
+      }
+      p {
+        max-width: 70ch;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>focus-within Bug for suggestions field</h1>
+    <p>
+      Here we have a component which has different behavior based on the browser which is
+      being used. The component shows a list of possible search options which pops open
+      when the user <em>focuses</em> the input field. This list of search options which
+      contains links, and the goal is the user could select one of the links that is
+      shown (see <a href="https://github.com/innoq/simplete">simplete</a> for more context).
+    </p>
+    <p>
+      The component uses
+      <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-within">focus-within</a>
+      to implement this behavior.
+      <em>However</em>, this is doesn't work in Safari.
+      My guess is that Safari doesn't recognize the `.suggestions` dropdown as being part of
+      the <code>form</code> element, so when you try to select an element from within the list,
+      you end up triggering the focus out event which just hides the dropdown before you are
+      actually able to click on the link in the dropdown.
+    </p>
+    <form>
+      <label for="search">Search</label>
+      <input id="search" type="search">
+      <div class="suggestions">
+        <ul>
+          <li><a href="#1">One</a></li>
+          <li><a href="#2">Two</a></li>
+          <li><a href="#3">Three</a></li>
+        </ul>
+      </div>
+    </form>
+  </body>
+</html>
