@@ -11,7 +11,7 @@
       form {
         display: relative;
       }
-      form:not(:focus-within) .suggestions {
+      form:not(:focus-within) .suggestions--buggy {
         display: none;
       }
       .suggestions {
@@ -21,6 +21,18 @@
       }
       .suggestions li {
         padding: 0.5rem 1rem;
+      }
+
+      .suggestions--fixed li {
+        transition: max-height 1s ease;
+        max-height: 100vh;
+      }
+      form:not(:focus-within) .suggestions--fixed {
+        opacity: 0;
+      }
+      form:not(:focus-within) .suggestions--fixed li {
+        overflow: hidden;
+        max-height: 0;
       }
 
       /* Other styles for aesthetics */
@@ -35,6 +47,15 @@
       }
       p {
         max-width: 70ch;
+      }
+      .indicator {
+        margin-bottom: 0.5rem;
+      }
+      .indicator :not(:target) {
+        display: none;
+      }
+      .indicator :target::before {
+        content: "Selected: ";
       }
     </style>
   </head>
@@ -57,14 +78,60 @@
       you end up triggering the focus out event which just hides the dropdown before you are
       actually able to click on the link in the dropdown.
     </p>
+    <ul class="indicator">
+      <li id="1">Selection 1</li>
+      <li id="2">Selection 2</li>
+      <li id="3">Selection 3</li>
+    </ul>
     <form>
       <label for="search">Search</label>
       <input id="search" type="search">
-      <div class="suggestions">
+      <div class="suggestions suggestions--buggy">
         <ul>
-          <li><a href="#1">One</a></li>
-          <li><a href="#2">Two</a></li>
-          <li><a href="#3">Three</a></li>
+          <li><a href="#1">Selection 1</a></li>
+          <li><a href="#2">Selection 2</a></li>
+          <li><a href="#3">Selection 3</a></li>
+        </ul>
+      </div>
+    </form>
+
+    <h2>Solution</h2>
+    <p>
+      Here is one solution which uses <code>opacity: 0;</code> to hide the dropdown field,
+      and then uses a <code>transition</code> on the <code>max-height</code> property with
+      a <code>overflow: hidden;</code> rule to also make the elements no longer clickable
+      (because they will no longer have a height). But because it is a <em>transition</em>,
+      the height is not modified immediately, so there is still time in Safari to click on
+      the element before it "disappears" thanks to the change in the `focus-within` rule.
+    </p>
+    <h3>CSS Snippet for Solution</h3>
+<pre><code>
+.suggestions--fixed li {
+  transition: max-height 1s ease;
+  max-height: 100vh;
+}
+form:not(:focus-within) .suggestions--fixed {
+  opacity: 0;
+}
+form:not(:focus-within) .suggestions--fixed li {
+  overflow: hidden;
+  max-height: 0;
+}
+</code>
+</pre>
+    <ul class="indicator">
+      <li id="s1">Selection 1</li>
+      <li id="s2">Selection 2</li>
+      <li id="s3">Selection 3</li>
+    </ul>
+    <form>
+      <label for="search">Search</label>
+      <input id="search" type="search">
+      <div class="suggestions suggestions--fixed">
+        <ul>
+          <li><a href="#s1">One</a></li>
+          <li><a href="#s2">Two</a></li>
+          <li><a href="#s3">Three</a></li>
         </ul>
       </div>
     </form>
