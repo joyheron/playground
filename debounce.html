@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Testing out Debouncing</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description"
+			content="A test to see how debouncing can work for the keyup event">
+	</head>
+	<body>
+		<label for="inputWithoutDebouncing">Input without Debouncing</label>
+		<input id="inputWithoutDebouncing" data-out="output1">
+		<ul id="output1"></ul>
+
+		<label for="inputWithDebouncing">Input with Debouncing</label>
+		<input id="inputWithDebouncing" data-out="output2">
+		<ul id="output2"></ul>
+
+		<script>
+			function debounce(delay, ctx, fn) {
+				if(fn === undefined) { // shift arguments
+					fn = ctx;
+					ctx = null;
+				}
+
+				let timer;
+				return function() {
+					let args = arguments;
+					if(timer) {
+						clearTimeout(timer);
+						timer = null;
+					}
+					timer = setTimeout(_ => {
+						fn.apply(ctx, args);
+						timer = null;
+					}, delay);
+				};
+			}
+
+			function toOutput(event) {
+				let input = event.target;
+				let output = document.getElementById(input.getAttribute("data-out"));
+				let li = document.createElement("li");
+				li.textContent = input.value;
+				output.appendChild(li);
+			}
+
+			document.getElementById("inputWithoutDebouncing")
+				.addEventListener("keyup", ev => toOutput(ev));
+
+			document.getElementById("inputWithoutDebouncing")
+				.addEventListener("keyup", debounce(300, ev => toOutput(ev)));
+		</script>
+	</body>
+</html>
