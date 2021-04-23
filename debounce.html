@@ -48,7 +48,7 @@
 			document.getElementById("inputWithoutDebouncing")
 				.addEventListener("keyup", ev => toOutput(ev));
 
-			document.getElementById("inputWithoutDebouncing")
+			document.getElementById("inputWithDebouncing")
 				.addEventListener("keyup", debounce(300, ev => toOutput(ev)));
 		</script>
 	</body>
