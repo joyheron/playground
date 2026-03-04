@@ -86,10 +86,16 @@
 			<section>
 				<h2>Prompt Injection</h2>
 				<p>
-					A malicious prompt gets mixed in with your genuine instructions, and the LLM can't tell them apart!
+					A malicious prompt gets mixed in with your genuine instructions, and the LLM can't tell them apart!*
 				</p>
 				<p>
 					LLMs will happily follow any instruction, even if it originated from an untrusted source!
+				</p>
+				<p>
+					<small>
+						*Latest cutting edge models from Anthropic and OpenAI are getting better at recognizing
+						potentially malicious code, but <strong>this is still not a solved problem!</strong>
+					</small>
 				</p>
 			</section>
 			<section>
@@ -202,7 +208,7 @@
 					<li>What coding agents do I use? <small>(me: <code>codex</code> and <code>claude</code>)</small></li>
 					<li>What development setup is necessary? <small>(me: <code>docker-compose</code>)</small></li>
 					<li>What build tooling do I use? <small>(me: <code>gradle</code> and <code>npm</code>)</small></li>
-					<li>What programming languages do I use? <small>(me: Java and JavaScript)</small></li>
+					<li>What programming languages do I use? <small>(me: Java, JavaScript, CSS, and HTML)</small></li>
 					<li>Which IDE/editor do I prefer? <small>(me: IntelliJ)</small></li>
 				</ul>
 			</section>
@@ -224,6 +230,7 @@
 				<ol>
 					<li>minimal configuration</li>
 					<li>LLM agnostic</li>
+					<li>Tried and true technology</li>
 				</ol>
 			</section>
 			<section>
@@ -380,7 +387,7 @@ export NO_PROXY="localhost,127.0.0.1"</code></pre>
     ip daddr 172.18.0.0/16 accept
 
     # Allow traffic to the proxy
-    ip daddr <My Host Ip> tcp dport 8888 accept
+    ip daddr &lt;My Host Ip&gt; tcp dport 8888 accept
   }
 }</code></pre>
 				</details>
@@ -388,6 +395,31 @@ export NO_PROXY="localhost,127.0.0.1"</code></pre>
 			<section>
 				<p>✅ increased protection against <span class="padding-rounded trifecta-communicate">ability to <strong>communicate externally</strong></span></p>
 				<p>✅ increased protection against <span class="padding-rounded trifecta-untrusted">exposure to <strong>untrusted content</strong></span></p>
+			</section>
+			<section>
+				<p><code>codex --yolo</code> and <code>claude --dangerously-skip-permissions</code> DO NOT perform
+				websearch directly (unless configured to do so), their answers come via accessing the model</p>
+			</section>
+			<section>
+				<h2>My Learning: Agents don't need unlimited internet access for coding tasks</h2>
+			</section>
+			<section>
+				<h3>In practice, I end up using...</h3>
+				<p>...VM Sandbox for coding &mdash; severely restricted internet access, but access to data</p>
+				<p>...chatbots for websearch &mdash; unrestricted internet access, severely limited data</p>
+				<p>
+					<small>This follows the <a href="https://ai.meta.com/blog/practical-ai-agent-security/">Agents Rule of Two</a>
+					(an agent is capable of max 2 of the trifecta to <em>reduce</em> (but not eliminate) risk)
+					</small>
+				</p>
+			</section>
+			<section>
+				<h2>A word about <a href="https://openclaw.ai/">OpenClaw</a> 🦞</h2>
+				<p>convenience vs. security → security sacrificed to increase convenience</p>
+				<p>use a physical device as a sandbox</p>
+				<p>don't give it access to any data that you don't want to leak onto the internet</p>
+				<p>each new capability and api access <em><strong>increases</strong></em> lethal trifecta risk</p>
+				<p>in an ideal world you would want to sandbox each capability separately</p>
 			</section>
 			<section>
 				<h2>Time to find <em>your</em> 🫵 solution!</h2>
