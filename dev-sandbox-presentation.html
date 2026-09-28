@@ -81,7 +81,9 @@
 			</section>
 			<section>
 				<p>Tradeoff between security and convenience.</p>
-				<p>Convenience is currently winning! (🤔 Do you think that could backfire? 🤔)</p>
+				<p>Convenience is currently winning!</p>
+				<hr />
+				<p>🤔 <em><strong>What could go wrong?</strong></em> 🤔</p>
 			</section>
 			<section>
 				<h2>Prompt Injection</h2>
@@ -205,7 +207,7 @@
 			<section>
 				<h2>How to choose a development sandbox?</h2>
 				<ul>
-					<li>What coding agents do I use? <small>(me: <code>codex</code> and <code>claude</code>)</small></li>
+					<li>What coding agents do I use? <small>(me: <code>pi</code>, <code>opencode</code>, <code>codex</code> and <code>claude</code>)</small></li>
 					<li>What development setup is necessary? <small>(me: <code>docker-compose</code>)</small></li>
 					<li>What build tooling do I use? <small>(me: <code>gradle</code> and <code>npm</code>)</small></li>
 					<li>What programming languages do I use? <small>(me: Java, JavaScript, CSS, and HTML)</small></li>
@@ -216,11 +218,9 @@
 				<h2>Many different sandboxing solutions</h2>
 				<ul>
 					<li>virtual machines like <a href="https://lima-vm.io/">Lima VM</a></li>
-					<li><a href="https://containers.dev/">development containers</a></li>
-					<li><a href="https://www.docker.com/blog/mcp-toolkit-mcp-servers-that-just-work/">Docker MCP Toolkit</a></li>
-					<li><a href="https://container-use.com/introduction">Container Use</a></li>
-					<li><a href="https://github.com/anthropic-experimental/sandbox-runtime">Anthropic sandbox</a></li>
 					<li><a href="https://docs.docker.com/ai/sandboxes/">Docker Sandbox</a></li>
+					<li><a href="https://containers.dev/">development containers</a></li>
+					<li><a href="https://container-use.com/introduction">Container Use</a></li>
 					<li>and <a href="https://github.com/restyler/awesome-sandbox">many many more</a>...</li>
 				</ul>
 				<small>⚠️ Disclaimer: I haven’t had time to look into all of these in detail, so please do your own due diligence before choosing a solution!</small>
@@ -232,6 +232,18 @@
 					<li>LLM agnostic</li>
 					<li>Tried and true technology</li>
 				</ol>
+			</section>
+			<section>
+				<h2>Container vs. VM?</h2>
+				<ul>
+					<li>VMs provide a better isolation level</li>
+					<li>Models are trained on container CVEs or known misconfigurations and can quite consistently break out of a container when prompted.</li>
+				</ul>
+			</section>
+			<section>
+				<h2><a href="https://docs.docker.com/ai/sandboxes/">Docker Sandboxes</a></h2>
+
+				<p>Provide a good basic setup for sandboxing (without Rosetta emulation).</p>
 			</section>
 			<section>
 				<h2>Lima VM for solution on MacOS</h2>
@@ -255,12 +267,18 @@ vmOpts:
       binfmt: true
 </small></code></pre>
 			</section>
-			<section>
+			<!-- <section>
 				<h2>Create development sandbox</h2>
 				<p><code>limactl create devbox.yml</code></p>
 
 				<h2>Start shell on development sandbox</h2>
 				<p><code>limactl shell devbox</code></p>
+			</section>-->
+			<section>
+				<h2>Create development sandbox</h2>
+
+				<p><code>sbx run claude --name devbox</code></p>
+				<p><code>sbx secret set anthropic --sandbox devbox</code></p>
 			</section>
 			<section>
 				<h2>Mounting directory provides isolation</h2>
@@ -313,7 +331,7 @@ projects
 					}
 				</style>
 			</section>
-			<section>
+			<!-- <section>
 				<h2>Monitor CONNECT method in TLS handshake + compare to allowlist</h2>
 				<p>
 					sandbox → proxy on host (domain allowed?: YES) → Internet!
@@ -391,35 +409,37 @@ export NO_PROXY="localhost,127.0.0.1"</code></pre>
   }
 }</code></pre>
 				</details>
+			</section> -->
+			<section>
+<pre><code>Initialize the global network policy for your sandboxes:
+
+Applies to all sandboxes, current and future — change it later with
+"sbx policy allow/deny/rm". Kits, including built-in agent kits, may
+also add per-sandbox rules.
+
+	1. Open         — All network traffic allowed, no restrictions.
+	2. Balanced     — Default deny, with common dev sites allowed.
+❯ 3. Locked Down  — All network traffic blocked unless you allow it.
+
+Use ↑/↓ or 1–3 to navigate, Enter to confirm, Esc to cancel.
+</code></pre>
 			</section>
 			<section>
 				<p>✅ increased protection against <span class="padding-rounded trifecta-communicate">ability to <strong>communicate externally</strong></span></p>
 				<p>✅ increased protection against <span class="padding-rounded trifecta-untrusted">exposure to <strong>untrusted content</strong></span></p>
 			</section>
 			<section>
-				<p><code>codex --yolo</code> and <code>claude --dangerously-skip-permissions</code> DO NOT perform
-				websearch directly (unless configured to do so), their answers come via accessing the model</p>
-			</section>
-			<section>
-				<h2>My Learning: Agents don't need unlimited internet access for coding tasks</h2>
+				<h2>Agents don't need unlimited internet access for coding tasks</h2>
 			</section>
 			<section>
 				<h3>In practice, I end up using...</h3>
-				<p>...VM Sandbox for coding &mdash; severely restricted internet access, but access to data</p>
+				<p>...VM Sandbox/Docker Sandbox for coding &mdash; severely restricted internet access, but access to data</p>
 				<p>...chatbots for websearch &mdash; unrestricted internet access, severely limited data</p>
 				<p>
 					<small>This follows the <a href="https://ai.meta.com/blog/practical-ai-agent-security/">Agents Rule of Two</a>
 					(an agent is capable of max 2 of the trifecta to <em>reduce</em> (but not eliminate) risk)
 					</small>
 				</p>
-			</section>
-			<section>
-				<h2>A word about <a href="https://openclaw.ai/">OpenClaw</a> 🦞</h2>
-				<p>convenience vs. security → security sacrificed to increase convenience</p>
-				<p>use a physical device as a sandbox</p>
-				<p>don't give it access to any data that you don't want to leak onto the internet</p>
-				<p>each new capability and api access <em><strong>increases</strong></em> lethal trifecta risk</p>
-				<p>in an ideal world you would want to sandbox each capability separately</p>
 			</section>
 			<section>
 				<h2>Time to find <em>your</em> 🫵 solution!</h2>
