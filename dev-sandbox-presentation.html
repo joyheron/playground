@@ -63,6 +63,9 @@
 			h3:has(code) {
 				line-height: 1.5;
 			}
+			.img {
+				max-width: 100%;
+			}
 		</style>
 		<script defer src="slides.js"></script>
 		<script defer src="https://unpkg.com/prismjs@1.15.0/prism.js"></script>
@@ -277,8 +280,8 @@ vmOpts:
 			<section>
 				<h2>Create development sandbox</h2>
 
-				<p><code>sbx run claude --name devbox</code></p>
 				<p><code>sbx secret set anthropic --sandbox devbox</code></p>
+				<p><code>sbx run claude --name devbox</code></p>
 			</section>
 			<section>
 				<h2>Mounting directory provides isolation</h2>
@@ -445,6 +448,11 @@ Use ↑/↓ or 1–3 to navigate, Enter to confirm, Esc to cancel.
 				<h2>Time to find <em>your</em> 🫵 solution!</h2>
 				<p>Find a solution using mature vetted technologies.</p>
 				<p>You can use AI to evaluate solutions, but DO NOT use AI to set up the sandbox itself! 🙅‍♀️</p>
+			</section>
+			<section>
+				<a href="https://www.innoq.com/en/topics/agentic-software-security-training/">
+					<img class="img" src="images/training-agentic-software-security.png" alt="Neues Training Agentic Software Security">
+				</a>
 			</section>
 			<section>
 				<h2>I sandboxed my coding agents. You should too.</h2>
