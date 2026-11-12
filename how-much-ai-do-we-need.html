@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>How much AI do we need?</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description"
+			content="Questions and Thoughts about Open Weight and Local Models">
+		<link href="joy.css" rel="stylesheet">
+		<link href="innoq-fonts.css" rel="stylesheet">
+		<link href="prism-theme.css" rel="stylesheet">
+		<link href="slides.css" rel="stylesheet">
+		<style>
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				font-family:  "FFMarkWebPro", "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;;
+			}
+			body:not(.slides) h2 {
+				margin-top: var(--spacer-lg);
+			}
+			.slides {
+				--container-width: 55ch;
+			}
+			.abridged .abridge {
+				display: none;
+			}
+			pre {
+				padding: var(--spacer-sm);
+				margin: 0 calc(-1 * var(--spacer-sm));
+				overflow: auto;
+				max-height: 55rem;
+			}
+			figure {
+				border: 1px solid black;
+				padding: var(--spacer-md);
+				margin: 0 calc(-1 * var(--spacer-md));
+			}
+			blockquote {
+				margin: 0 0 var(--spacer-sm);
+			}
+			section {
+				container-type: inline-size;
+			}
+			@media (min-width: calc(80ch + 0.75rem * 2)) {
+				pre {
+					padding: var(--spacer-base);
+					margin: 0 calc(-1 * var(--spacer-base));
+				}
+			}
+			.img {
+				max-width: 100%;
+			}
+		</style>
+		<script defer src="slides.js"></script>
+		<script defer src="https://unpkg.com/prismjs@1.15.0/prism.js"></script>
+	</head>
+	<body>
+		<main>
+			<section>
+				<h1>How much AI do we need?</h1>
+				<p>My thoughts about open weights models and local AI.</p>
+				<address>By <a rel="author" href="https://joyheron.com/">Joy Heron</a></address>
+				<p class="site-only">
+					This site is also available as a <a href="./how-much-ai-do-we-need.html?slides">slideshow</a>.
+				</p>
+			</section>
+			<section>
+				<h2>Timeline of my AI usage</h2>
+				<ul>
+					<li>Spring 2025: First experiments with Claude Code</li>
+					<li>Summer 2025: consistent $200-300 token spend per month</li>
+					<li>Autumn 2025: Switch to GPT models with subscription</li>
+					<li>Spring 2026: OpenAI increases pricing and I reach my token limits daily 👀</li>
+					<li>Summer 2026: Start experimenting with
+						<a href="https://www.innoq.com/en/blog/2026/07/beyond-claude-gpt-open-weights/">Heribert</a>,
+						an internal LiteLLM giving us access to open weights models
+					</li>
+					<li>...</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Different model sizes</h2>
+				<ul>
+					<li>Small: <code>deepseek-v4.1-flash</code>, <code>glm-53-flash</code>, <code>qwen3.6-a3b-27b</code>, Haiku (Anthropic), Luna (OpenAI)</li>
+					<li>Medium: <code>glm-5.3</code>, Sonnet (Anthropic), Sol (OpenAI)</li>
+					<li>Large: <code>kimi-k3.1-pro</code>, Opus (Anthropic), Fable (Anthropic), Astra (OpenAI)</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Learning: If you always break down the work into chunks which are small enough for a human to review, medium sized models are good enough.</h2>
+			</section>
+			<section>
+				<h2>Learning: Inference is expensive</h2>
+				<p>I'd gotten <em>used</em> to paying <$100 a month with subscriptions, but using GLM 5.2 as a drop in replacement cost 200-300$</p>
+			</section>
+			<section>
+				<h2>Learning: Focusing on token expenditure kills my productivity</h2>
+				<p>After spending "so much" for one month, I tried to reduce costs by reaching for cheaper models and
+					keeping myself more in the loop -- negating a lot of the benefits of agentic software engineering.
+				</p>
+			</section>
+			<section>
+				<h2>Learning: Using a model which is too small is a waste of time/money</h2>
+				<p>
+					If a smaller model isn't able to execute a task well, you end up redoing loads of work and having
+					to give fine granular instructions. Or just redoing it all with a larger model.
+				</p>
+			</section>
+			<section>
+				<h2>For what tasks <em>CAN</em> we use smaller models?</h2>
+				<ul>
+					<li>Please write a unit test for method XYZ</li>
+					<li>Please write a guided tour of the changes in this commit</li>
+					<li>Please read this transcript of our audio and extract an ADR with the topics that we discussed</li>
+					<li>Add a column to the table to show WXY</li>
+					<li><strong>Rule of Thumb: If it touches 1-2 files + tests, a smaller model might do a good (enough) job</strong></li>
+				</ul>
+			</section>
+			<section>
+				<p>
+					When you have access to different models and use them for different tasks, you do develop a bit of
+					"muscle memory" for which model might be good for different tasks.
+				</p>
+				<p>
+					<strong><em>In the future</em></strong> we will likely be able to combine the new decision models to choose the proper
+					model for executing a task and dynamically choosing an appropriate model. 😍
+				</p>
+			</section>
+			<section>
+				<h2>Learning: Don't use Agents for tasks which are highly deterministic</h2>
+				<p>copy/paste with Agents is expensive. With a script it's free.</p>
+			</section>
+			<section>
+				<h2>Timeline of AI usage (cont.)</h2>
+				<ul>
+					<li>...</li>
+					<li>Autumn 2026: Got rid of codex subscription because open weights models are good enough</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Give open weights models a try! You might be surprised at how capable they are.</h2>
+				<p class="pt-lg">joy.heron@innoq.com</p>
+				<ul role="list" class="horizontal-list">
+					<li><a href="https://joyheron.com/">joyheron.com</a></li>
+					<li><a href="https://www.linkedin.com/in/joy-heron-49640792/">LinkedIn</a></li>
+					<li><a href="https://innoq.social/@joy">Mastodon</a></li>
+				</ul>
+				<style>
+					.pt-lg {
+						padding-top: var(--spacer-lg);
+					}
+					.horizontal-list {
+						display: flex;
+						align-items: center;
+						gap: var(--spacer-md);
+						justify-content: center;
+					}
+					.horizontal-list > * {
+						margin: 0;
+					}
+				</style>
+			</section>
+    </main>
+	</body>
+</html>
